@@ -73,8 +73,12 @@ createBoard()
 
 function flipCard(){
     const cardId = this.getAttribute('data-id')
+    if (cardsChosenId[0] === cardId){
+        return
+    }else{
     cardsChosen.push(board[cardId].name)
     cardsChosenId.push(cardId)
+    }
     this.setAttribute('src', board[cardId].img)
     if (cardsChosen.length === 2){
        setTimeout(checkMatch, 500)
@@ -89,6 +93,8 @@ function checkMatch(){
     if (cardsChosen[0] === cardsChosen[1]){
         cards[card1].setAttribute('src', 'img/black.jpeg')
         cards[card2].setAttribute('src', 'img/black.jpeg')
+        cards[card1].removeEventListener("click", flipCard)
+        cards[card2].removeEventListener("click", flipCard)
         const score = document.querySelector(".score")
         scoreKeep.push(cardsChosen)
         score.innerHTML = scoreKeep.length
